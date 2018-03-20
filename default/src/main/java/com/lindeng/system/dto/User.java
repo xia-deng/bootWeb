@@ -1,12 +1,31 @@
-package com.lindeng.system.dao;
+package com.lindeng.system.dto;
 
+import com.lindeng.enums.UserStatusEnum;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "t_sys_user")
 public class User {
+    @Id
+    @GeneratedValue
     private long id;
+
+    @Column(name = "password",nullable = false)
     private String passWord;
+
+    @Column(name = "salt", nullable = false)
     private String salt;
+
+    @Column(name = "username", nullable = false,unique = true)
     private String userName;
+
+    @Column(name = "deptId",nullable = false)
     private long departmentId;
+
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    private UserStatusEnum status;
 
     public long getId() {
         return id;
@@ -48,6 +67,14 @@ public class User {
         this.departmentId = departmentId;
     }
 
+    public UserStatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(UserStatusEnum status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -56,6 +83,7 @@ public class User {
                 ", salt='" + salt + '\'' +
                 ", userName='" + userName + '\'' +
                 ", departmentId=" + departmentId +
+                ", status=" + status +
                 '}';
     }
 }

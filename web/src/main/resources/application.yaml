@@ -3,7 +3,15 @@ application:
 
 spring:
   datasource:
-    url: "jdbc:sqlite:d:/db/example.db"
+    url: "jdbc:sqlite:/workspace/example.db"
     username:
     passoword:
     driver-class-name: "org.sqlite.JDBC"
+  jpa:
+    database-platform: com.lindeng.common.dialect.SQLiteDialect
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+    hibernate:
+      ddl-auto: update
