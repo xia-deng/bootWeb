@@ -1,0 +1,9 @@
+application:
+  title: "夏律师的网站"
+
+spring:
+  datasource:
+    url: "jdbc:sqlite:d:/db/example.db"
+    username:
+    passoword:
+    driver-class-name: "org.sqlite.JDBC"
