@@ -1,6 +1,6 @@
 package com.lindeng.system.dto;
 
-import com.lindeng.enums.UserStatusEnum;
+import com.lindeng.enums.StatusEnum;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,25 +9,26 @@ import javax.persistence.*;
 @Table(name = "t_sys_user")
 public class User {
     @Id
-    @GenericGenerator(name="systemUUID",strategy="uuid")
+    @GenericGenerator(name = "systemUUID", strategy = "uuid")
     @GeneratedValue(generator = "systemUUID")
     private String id;
 
-    @Column(name = "password",nullable = false)
+    @Column(name = "password", nullable = false, length = 128)
     private String passWord;
 
     @Column(name = "salt", nullable = false)
     private String salt;
 
-    @Column(name = "username", nullable = false,unique = true)
+    @Column(name = "username", nullable = false, unique = true)
     private String userName;
 
-    @Column(name = "deptId",nullable = false)
-    private String departmentId;
+    @ManyToOne(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+    @JoinColumn(name = "deptId")
+    private Department department;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.ORDINAL)
-    private UserStatusEnum status;
+    private StatusEnum status;
 
     public String getId() {
         return id;
@@ -61,19 +62,19 @@ public class User {
         this.userName = userName;
     }
 
-    public String getDepartmentId() {
-        return departmentId;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
-    public UserStatusEnum getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(UserStatusEnum status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 
@@ -84,7 +85,7 @@ public class User {
                 ", passWord='" + passWord + '\'' +
                 ", salt='" + salt + '\'' +
                 ", userName='" + userName + '\'' +
-                ", departmentId=" + departmentId +
+                ", department=" + department.getDeptName() +
                 ", status=" + status +
                 '}';
     }
