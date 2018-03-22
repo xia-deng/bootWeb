@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User,String>{
-    List<User> getAllByDepartmentIdAndStatusIsLessThanOrderByStatusAsc (Long deptId, StatusEnum status);
-    User getUserById(Long userId);
+    List<User> getAllByDepartmentIdAndStatusIsLessThanOrderByStatusAsc (String deptId, StatusEnum status);
+    User getUserById(String userId);
     List<User> getAllByStatusIsLessThanOrderByStatusAsc (StatusEnum status);
 
 }

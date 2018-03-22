@@ -3,7 +3,7 @@ application:
 
 spring:
   datasource:
-    url: "jdbc:sqlite:d:/example.db"
+    url: "jdbc:sqlite:/workspace/boot.db"
     username:
     passoword:
     driver-class-name: "org.sqlite.JDBC"

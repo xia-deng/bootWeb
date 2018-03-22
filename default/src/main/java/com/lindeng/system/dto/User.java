@@ -1,5 +1,6 @@
 package com.lindeng.system.dto;
 
+import com.lindeng.common.util.DataUtil;
 import com.lindeng.enums.StatusEnum;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -22,13 +23,19 @@ public class User {
     @Column(name = "username", nullable = false, unique = true)
     private String userName;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
     @JoinColumn(name = "deptId")
     private Department department;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private StatusEnum status;
+
+    @Column(name = "createTime", nullable = false)
+    private Long createTime;
+
+    @Column(name = "updateTime", nullable = false)
+    private Long updateTime = DataUtil.getNowSecond();
 
     public String getId() {
         return id;
@@ -78,15 +85,33 @@ public class User {
         this.status = status;
     }
 
+    public Long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Long createTime) {
+        this.createTime = createTime;
+    }
+
+    public Long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Long updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", passWord='" + passWord + '\'' +
                 ", salt='" + salt + '\'' +
                 ", userName='" + userName + '\'' +
-                ", department=" + department.getDeptName() +
+                ", department=" + department +
                 ", status=" + status +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
                 '}';
     }
 }

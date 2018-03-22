@@ -1,35 +1,57 @@
 package com.lindeng.system.dto;
 
+import com.lindeng.common.util.DataUtil;
 import com.lindeng.enums.StatusEnum;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Table(name = "t_sys_department")
 @Entity
 public class Department {
 
     @Id
-    @GenericGenerator(strategy = "uuid",name = "systemUUID")
+    @GenericGenerator(strategy = "uuid", name = "systemUUID")
     @GeneratedValue(generator = "systemUUID")
     private String id;
 
     @Column(name = "departName", nullable = false, length = 32, unique = true)
     private String deptName;
 
-    @Column(name = "departNumber",nullable = false, length = 32, unique = true)
+    @Column(name = "departNumber", nullable = false, length = 32, unique = true, columnDefinition = "varchar(32) default ‘0000’")
     private String deptNumber;
 
-    @Column(name = "departDescription", nullable = true,length = 255)
+    @Column(name = "departDescription", nullable = true, length = 255)
     private String description;
 
+    @Column(name = "departLevel", nullable = true, columnDefinition = "INT default 0")
+    private int departLevel;
+
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "status",nullable = false)
+    @Column(name = "status", nullable = false)
     private StatusEnum status;
 
-    @OneToMany(cascade =CascadeType.ALL,mappedBy = "department",fetch = FetchType.LAZY)
-    private List<User> users;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "department", fetch = FetchType.LAZY)
+    private Set<User> users;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parentId")
+    private Department parentDepart;
+
+    @OneToMany(targetEntity = Department.class, cascade = CascadeType.ALL, mappedBy = "parentDepart")
+    @Fetch(FetchMode.SUBSELECT)
+    @OrderBy("departLevel")
+    private Set<Department> childDeparts;
+
+    @Column(name = "createTime", nullable = false)
+    private Long createTime;
+
+    @Column(name = "updateTime", nullable = false)
+    private Long updateTime = DataUtil.getNowSecond();
 
     public String getId() {
         return id;
@@ -71,12 +93,52 @@ public class Department {
         this.status = status;
     }
 
-    public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public int getDepartLevel() {
+        return departLevel;
+    }
+
+    public void setDepartLevel(int departLevel) {
+        this.departLevel = departLevel;
+    }
+
+    public Department getParentDepart() {
+        return parentDepart;
+    }
+
+    public void setParentDepart(Department parentDepart) {
+        this.parentDepart = parentDepart;
+    }
+
+    public Set<Department> getChildDeparts() {
+        return childDeparts;
+    }
+
+    public void setChildDeparts(Set<Department> childDeparts) {
+        this.childDeparts = childDeparts;
+    }
+
+    public Long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Long createTime) {
+        this.createTime = createTime;
+    }
+
+    public Long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Long updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override
@@ -86,8 +148,10 @@ public class Department {
                 ", deptName='" + deptName + '\'' +
                 ", deptNumber='" + deptNumber + '\'' +
                 ", description='" + description + '\'' +
+                ", departLevel=" + departLevel +
                 ", status=" + status +
-                ", userSize=" + users.size() +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
                 '}';
     }
 }
