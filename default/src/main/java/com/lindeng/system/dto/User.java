@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Table(name = "t_sys_user")
 public class User {
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String id;
 
     @Column(name = "password",nullable = false)
     private String passWord;
@@ -21,17 +21,17 @@ public class User {
     private String userName;
 
     @Column(name = "deptId",nullable = false)
-    private long departmentId;
+    private String departmentId;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private UserStatusEnum status;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -59,11 +59,11 @@ public class User {
         this.userName = userName;
     }
 
-    public long getDepartmentId() {
+    public String getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(long departmentId) {
+    public void setDepartmentId(String departmentId) {
         this.departmentId = departmentId;
     }
 
