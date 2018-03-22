@@ -1,6 +1,7 @@
 package com.lindeng.system.dto;
 
 import com.lindeng.enums.UserStatusEnum;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -8,7 +9,8 @@ import javax.persistence.*;
 @Table(name = "t_sys_user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GenericGenerator(name="systemUUID",strategy="uuid")
+    @GeneratedValue(generator = "systemUUID")
     private String id;
 
     @Column(name = "password",nullable = false)
