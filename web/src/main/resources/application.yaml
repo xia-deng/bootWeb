@@ -8,7 +8,7 @@ spring:
     passoword:
     driver-class-name: "org.sqlite.JDBC"
   jpa:
-    database-platform: com.lindeng.common.dialect.SQLiteDialect
+    database-platform: com.SQLiteDialect
     properties:
       hibernate:
         hbm2ddl:

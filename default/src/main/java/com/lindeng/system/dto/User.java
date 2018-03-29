@@ -5,6 +5,7 @@ import com.lindeng.enums.StatusEnum;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "t_sys_user")
@@ -23,7 +24,7 @@ public class User {
     @Column(name = "username", nullable = false, unique = true)
     private String userName;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "deptId")
     private Department department;
 
@@ -36,6 +37,10 @@ public class User {
 
     @Column(name = "updateTime", nullable = false)
     private Long updateTime = DataUtil.getNowSecond();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "t_sys_user_role", joinColumns = {@JoinColumn(name ="userId" )}, inverseJoinColumns = { @JoinColumn(name = "roleId") })
+    private Set<Role> roles;
 
     public String getId() {
         return id;
@@ -83,6 +88,15 @@ public class User {
 
     public void setStatus(StatusEnum status) {
         this.status = status;
+    }
+
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public Long getCreateTime() {

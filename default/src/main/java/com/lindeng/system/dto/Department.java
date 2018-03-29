@@ -7,7 +7,6 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Table(name = "t_sys_department")
@@ -22,7 +21,7 @@ public class Department {
     @Column(name = "departName", nullable = false, length = 32, unique = true)
     private String deptName;
 
-    @Column(name = "departNumber", nullable = false, length = 32, unique = true, columnDefinition = "varchar(32) default ‘0000’")
+    @Column(name = "departNumber", nullable = false, length = 32, unique = true)
     private String deptNumber;
 
     @Column(name = "departDescription", nullable = true, length = 255)
@@ -52,6 +51,10 @@ public class Department {
 
     @Column(name = "updateTime", nullable = false)
     private Long updateTime = DataUtil.getNowSecond();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "t_sys_dept_role", joinColumns = {@JoinColumn(name ="deptId" )}, inverseJoinColumns = { @JoinColumn(name = "roleId") })
+    private Set<Role> roles;
 
     public String getId() {
         return id;
@@ -139,6 +142,14 @@ public class Department {
 
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
