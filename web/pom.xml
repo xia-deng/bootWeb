@@ -14,8 +14,22 @@
     <dependencies>
         <dependency>
             <groupId>com.lindeng</groupId>
-            <artifactId>default</artifactId>
-            <version>${default.version}</version>
+            <artifactId>user</artifactId>
+            <version>${user.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lindeng</groupId>
+            <artifactId>security</artifactId>
+            <version>${security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lindeng</groupId>
+            <artifactId>common</artifactId>
+            <version>${security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
     </dependencies>
 </project>

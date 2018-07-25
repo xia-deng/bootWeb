@@ -2,16 +2,27 @@ application:
   title: "夏律师的网站"
 
 spring:
+  thymeleaf:
+    prefix: classpath:/pages/
+    suffix: .html
+    mode: HTML5
+    encoding: utf-8
+    enabled: true
+    servlet:
+      content-type: text/html
+    check-template: true
+    cache: true
   datasource:
-    url: "jdbc:sqlite:/workspace/boot.db"
-    username:
-    passoword:
-    driver-class-name: "org.sqlite.JDBC"
+    url: jdbc:mysql://localhost:3306/bootWeb
+    username: bootWeb
+    password: boot_web_123
+    driver-class-name: com.mysql.jdbc.Driver
   jpa:
-    database-platform: com.SQLiteDialect
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     properties:
       hibernate:
         hbm2ddl:
           auto: update
     hibernate:
       ddl-auto: update
+    show-sql: true

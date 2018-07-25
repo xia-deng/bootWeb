@@ -4,8 +4,10 @@
     <artifactId>BootWeb</artifactId>
     <modules>
         <module>interface</module>
-        <module>default</module>
         <module>web</module>
+        <module>security</module>
+        <module>user</module>
+        <module>common</module>
     </modules>
     <groupId>com.lindeng</groupId>
     <version>1.0.0</version>
@@ -16,8 +18,10 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <core.version>1.0.0</core.version>
-        <default.version>1.0.0</default.version>
+        <user.version>1.0.0</user.version>
         <web.version>1.0.0</web.version>
+        <security.version>1.0.0</security.version>
+        <querydsl.version>4.2.1</querydsl.version>
     </properties>
 
     <dependencies>
@@ -39,6 +43,8 @@
             <scope>test</scope>
         </dependency>
 
+
+
     </dependencies>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -47,4 +53,15 @@
     </parent>
     <!-- https://mvnrepository.com/artifact/com.typesafe.play/play-java_2.11 -->
 
+    <!--<dependencyManagement>-->
+        <!--<dependencies>-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework</groupId>-->
+                <!--<artifactId>spring-framework-bom</artifactId>-->
+                <!--<version>4.2.5.RELEASE</version>-->
+                <!--<type>pom</type>-->
+                <!--<scope>import</scope>-->
+            <!--</dependency>-->
+        <!--</dependencies>-->
+    <!--</dependencyManagement>-->
 </project>
